@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowDown, CaretDown, Rocket, Coins, Atom, Handshake, Globe, Shield, ChatCircle, Storefront } from '@phosphor-icons/react';
+import { ArrowDown, Pause, Play, CaretDown, Rocket, Coins, Atom, Handshake, Globe, Shield, ChatCircle, Storefront } from '@phosphor-icons/react';
 import { Reveal } from './components/Reveal';
 import { GAME, CONTENT, type Locale, type SiteContent } from './data';
 import {
@@ -93,10 +93,64 @@ const HORIZON = {
 
 function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
   const copy = HORIZON[locale];
+  const scene = useRef<HTMLElement>(null);
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    const element = scene.current;
+    if (!element) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mouse = window.matchMedia('(hover: hover) and (pointer: fine)');
+    let visible = true;
+    const reset = () => {
+      element.style.setProperty('--parallax-x', '0px');
+      element.style.setProperty('--parallax-y', '0px');
+    };
+    const sync = () => {
+      const active = !paused && !reduced.matches && visible && !document.hidden;
+      element.dataset.motion = active ? 'running' : 'paused';
+      if (!active || !mouse.matches) reset();
+    };
+    const move = (event: PointerEvent) => {
+      if (element.dataset.motion !== 'running' || !mouse.matches || event.pointerType !== 'mouse') return;
+      const bounds = element.getBoundingClientRect();
+      element.style.setProperty('--parallax-x', `${(event.clientX - bounds.left - bounds.width / 2) / bounds.width * -12}px`);
+      element.style.setProperty('--parallax-y', `${(event.clientY - bounds.top - bounds.height / 2) / bounds.height * -8}px`);
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      sync();
+    });
+    observer.observe(element);
+    element.addEventListener('pointermove', move, { passive: true });
+    element.addEventListener('pointerleave', reset);
+    document.addEventListener('visibilitychange', sync);
+    reduced.addEventListener('change', sync);
+    mouse.addEventListener('change', sync);
+    sync();
+    return () => {
+      observer.disconnect();
+      element.removeEventListener('pointermove', move);
+      element.removeEventListener('pointerleave', reset);
+      document.removeEventListener('visibilitychange', sync);
+      reduced.removeEventListener('change', sync);
+      mouse.removeEventListener('change', sync);
+      reset();
+    };
+  }, [paused]);
+  const motionLabel = {
+    ru: paused ? 'Включить движение фона' : 'Остановить движение фона',
+    en: paused ? 'Resume background motion' : 'Pause background motion',
+    zh: paused ? '恢复背景动画' : '暂停背景动画',
+  }[locale];
   return (
     <>
-      <section className="hero" id="top">
-        <img className="hero-art" src={asset('brand/hero-horizon.webp')} alt="" fetchPriority="high" />
+      <section className="hero" id="top" ref={scene} data-motion="paused">
+        <div className="hero-parallax" aria-hidden="true">
+          <img className="hero-art" src={asset('brand/hero-horizon.webp')} alt="" fetchPriority="high" />
+        </div>
+        <button className="motion-toggle" type="button" onClick={() => setPaused(value => !value)} aria-label={motionLabel} title={motionLabel} aria-pressed={paused}>
+          {paused ? <Play size={18} aria-hidden /> : <Pause size={18} aria-hidden />}
+        </button>
         <div className="hero-inner">
           <p className="eyebrow">{t.hero.eyebrow}</p>
           <h1 className="hero-title">VOID DOMINION</h1>
