@@ -38,8 +38,20 @@ const DitherShader = {
  * sphere is pushed to the right so the left-aligned hero copy stays readable.
  * Imperative three.js keeps the postprocessing pipeline simple.
  */
-export function HeroScene() {
+type HeroSceneProps = {
+  paused?: boolean;
+  mode?: 'horizon' | 'side';
+};
+
+export function HeroScene({ paused = false, mode = 'side' }: HeroSceneProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(paused);
+  const runStateRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+    runStateRef.current?.();
+  }, [paused]);
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -80,7 +92,8 @@ export function HeroScene() {
     // Everything sits inside a group we push to the right / slightly down so the
     // luminous core is away from the hero text on the left.
     const world = new THREE.Group();
-    world.position.set(16, -2, 0);
+    const horizonMode = mode === 'horizon';
+    world.position.set(horizonMode ? 0 : 16, horizonMode ? -17 : -2, 0);
     scene.add(world);
 
     const isMobile = wrap.clientWidth < 760;
@@ -203,6 +216,7 @@ export function HeroScene() {
     // ===== PLANET =====
     const planetGroup = new THREE.Group();
     world.add(planetGroup);
+    const basePlanetScale = horizonMode ? 2.35 : 1;
 
     const planetUniforms = {
       uTime: { value: 0 },
@@ -417,7 +431,7 @@ export function HeroScene() {
     const clock = new THREE.Clock();
     function frame() {
       const t = clock.getElapsedTime();
-      planetGroup.rotation.y = t * 0.05;
+      planetGroup.rotation.y = t * (horizonMode ? 0.12 : 0.05);
       planetUniforms.uTime.value = t;
       starMat.uniforms.uTime.value = t;
       stars.rotation.y = t * 0.005;
@@ -430,9 +444,9 @@ export function HeroScene() {
       atmoUniforms.uTime.value = t;
       sunNebulaUniforms.uTime.value = t;
       sunNebulaUniforms.uPulse.value = breath;
-      planetGroup.scale.setScalar(1 + 0.012 * breath);
+      planetGroup.scale.setScalar(basePlanetScale * (1 + 0.012 * breath));
       composer.render();
-      if (running) rafId = requestAnimationFrame(frame);
+      if (running && !pausedRef.current) rafId = requestAnimationFrame(frame);
     }
     function start() {
       if (running) return;
@@ -448,10 +462,14 @@ export function HeroScene() {
     // пользователь не жжёт GPU на невидимый bloom-пайплайн.
     let inView = true;
     const updateRunState = () => {
-      if (reduced) return;
+      if (reduced || pausedRef.current) {
+        stop();
+        return;
+      }
       if (inView && !document.hidden) start();
       else stop();
     };
+    runStateRef.current = updateRunState;
     const io = new IntersectionObserver((entries) => {
       inView = entries[0]?.isIntersecting ?? true;
       updateRunState();
@@ -460,7 +478,7 @@ export function HeroScene() {
     const onVisibility = () => updateRunState();
     document.addEventListener('visibilitychange', onVisibility);
 
-    if (reduced) {
+    if (reduced || pausedRef.current) {
       composer.render();
     } else {
       start();
@@ -468,6 +486,7 @@ export function HeroScene() {
 
     return () => {
       stop();
+      if (runStateRef.current === updateRunState) runStateRef.current = null;
       document.removeEventListener('visibilitychange', onVisibility);
       io.disconnect();
       ro.disconnect();
@@ -488,7 +507,7 @@ export function HeroScene() {
       textures.forEach((t) => t.dispose());
       if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
     };
-  }, []);
+  }, [mode]);
 
   return <div ref={wrapRef} style={{ position: 'absolute', inset: 0 }} aria-hidden />;
 }
