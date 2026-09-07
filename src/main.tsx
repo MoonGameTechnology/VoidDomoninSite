@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { MotionConfig } from 'framer-motion';
 import './index.css';
 import './App.css';
+import './horizon.css';
 import App from './App';
 
 createRoot(document.getElementById('root')!).render(
