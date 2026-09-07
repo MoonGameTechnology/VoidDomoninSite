@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { ArrowDown, Pause, Play, CaretDown, Rocket, Coins, Atom, Handshake, Globe, Shield, ChatCircle, Storefront } from '@phosphor-icons/react';
 import { Reveal } from './components/Reveal';
 import { GAME, CONTENT, type Locale, type SiteContent } from './data';
@@ -160,7 +160,9 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
             <img src={asset('brand/hero-clean.webp')} alt="" />
           </div>
           <div className="hero-motion__stars" />
+          <div className="hero-motion__dust" />
           <div className="hero-motion__sun" />
+          <div className="hero-motion__flare" />
           <div className="hero-motion__fleet">
             <span className="fleet-ship fleet-ship--one" />
             <span className="fleet-ship fleet-ship--two" />
@@ -170,6 +172,8 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
             <span className="fleet-ship fleet-ship--six" />
           </div>
           <div className="hero-motion__orbits">
+            <span className="orbital-ring orbital-ring--one" />
+            <span className="orbital-ring orbital-ring--two" />
             <span className="orbital-planet" />
             <span className="orbital-moon" />
           </div>
@@ -179,7 +183,20 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
         </button>
         <div className="hero-inner">
           <p className="eyebrow">{t.hero.eyebrow}</p>
-          <h1 className="hero-title">VOID DOMINION</h1>
+          <div className="hero-title-wrap">
+            <span className="title-orbit title-orbit--one" aria-hidden="true" />
+            <span className="title-orbit title-orbit--two" aria-hidden="true" />
+            <h1 className="hero-title" aria-label="VOID DOMINION">
+              <span className="hero-title__glow" aria-hidden="true">VOID DOMINION</span>
+              <span className="hero-title__letters" aria-hidden="true">
+                {'VOID DOMINION'.split('').map((letter, index) => (
+                  <span className="hero-letter" style={{ '--letter-index': index } as CSSProperties} key={`${letter}-${index}`}>
+                    {letter === ' ' ? '\u00a0' : letter}
+                  </span>
+                ))}
+              </span>
+            </h1>
+          </div>
           <p className="hero-tagline">{copy.tagline}</p>
           <div className="hero-actions">
             <a className="btn btn-primary" href={GAME.apkUrl}>{copy.download}<ArrowDown size={22} aria-hidden /></a>
