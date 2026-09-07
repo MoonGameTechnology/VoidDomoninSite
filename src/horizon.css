@@ -116,7 +116,7 @@ body { background: #030b0f; }
  .hero-inner .hero-actions { order: 2; margin-top: 22px; }
 }
 
-/* Animate only the raster layer; text and actions remain stationary. */
+/* Keep the chosen artwork intact, then animate only a masked surface layer. */
 .hero-parallax {
   position: absolute;
   inset: -12px;
@@ -125,25 +125,97 @@ body { background: #030b0f; }
   transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
   transition: transform 1.6s ease-out;
 }
-.hero-canvas {
+.hero-motion {
   position: absolute;
   inset: 0;
   z-index: 1;
-  opacity: .72;
-  mix-blend-mode: screen;
   pointer-events: none;
+  overflow: hidden;
 }
-.hero-canvas::after { display: none; }
-.hero-canvas canvas { display: block; width: 100%; height: 100%; }
+.hero-motion__surface {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: .28;
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0 56%, rgba(0, 0, 0, .12) 61%, #000 68%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0 56%, rgba(0, 0, 0, .12) 61%, #000 68%, #000 92%, transparent 100%);
+}
+.hero-motion__surface img {
+  position: absolute;
+  inset: -3% -11%;
+  width: 122%;
+  height: 106%;
+  object-fit: cover;
+  object-position: center top;
+  transform-origin: 50% 68%;
+  animation: planet-surface-roll 30s ease-in-out infinite alternate;
+}
+.hero-motion__surface::after {
+  content: '';
+  position: absolute;
+  inset: 60% -10% 0;
+  background:
+    linear-gradient(108deg, transparent 12%, rgba(143, 244, 250, .14) 44%, rgba(255, 236, 197, .12) 54%, transparent 82%),
+    repeating-linear-gradient(112deg, transparent 0 13%, rgba(170, 245, 244, .08) 16% 18%, transparent 22% 31%);
+  mix-blend-mode: screen;
+  opacity: .62;
+  animation: cloud-bands 22s linear infinite;
+}
+.hero-motion__atmosphere {
+  position: absolute;
+  left: -14%;
+  top: 58%;
+  width: 128%;
+  height: 42%;
+  border-top: 1px solid rgba(143, 244, 250, .32);
+  border-radius: 50% 50% 0 0 / 24% 24% 0 0;
+  box-shadow: 0 -10px 28px rgba(53, 214, 230, .18), inset 0 8px 14px rgba(143, 244, 250, .06);
+  opacity: .68;
+  animation: atmosphere-breathe 8s ease-in-out infinite;
+}
+.hero-motion__flare {
+  position: absolute;
+  top: 55%;
+  left: 57%;
+  width: 28%;
+  height: 24%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255, 226, 169, .26), rgba(53, 214, 230, .08) 40%, transparent 72%);
+  filter: blur(11px);
+  mix-blend-mode: screen;
+  opacity: .5;
+  animation: solar-breathe 7s ease-in-out infinite;
+}
 .hero-parallax .hero-art {
   animation: horizon-drift 18s ease-in-out infinite alternate;
   transform-origin: 65% 60%;
   animation-play-state: paused;
 }
 .hero[data-motion="running"] .hero-art { animation-play-state: running; }
+.hero[data-motion="paused"] .hero-motion__surface img,
+.hero[data-motion="paused"] .hero-motion__surface::after,
+.hero[data-motion="paused"] .hero-motion__atmosphere,
+.hero[data-motion="paused"] .hero-motion__flare { animation-play-state: paused; }
 @keyframes horizon-drift {
-  from { transform: scale(1.02) translate3d(-8px, 4px, 0); }
-  to { transform: scale(1.085) translate3d(8px, -5px, 0); }
+  from { transform: scale(1.02) translate3d(-8px, 26px, 0); }
+  to { transform: scale(1.085) translate3d(8px, 17px, 0); }
+}
+@keyframes planet-surface-roll {
+  from { transform: translate3d(-2.4%, 0, 0) scale(1.025); }
+  to { transform: translate3d(2.4%, -0.6%, 0) scale(1.07); }
+}
+@keyframes cloud-bands {
+  from { transform: translate3d(-8%, 0, 0); }
+  to { transform: translate3d(8%, 0, 0); }
+}
+@keyframes atmosphere-breathe {
+  0%, 100% { opacity: .5; transform: scaleY(.96); }
+  50% { opacity: .82; transform: scaleY(1.04); }
+}
+@keyframes solar-breathe {
+  0%, 100% { opacity: .32; transform: scale(.94); }
+  50% { opacity: .62; transform: scale(1.08); }
 }
 .motion-toggle {
   position: absolute;
@@ -164,15 +236,19 @@ body { background: #030b0f; }
 .motion-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
 @media (hover: none), (pointer: coarse) {
   .hero-parallax .hero-art { animation-name: horizon-drift-mobile; animation-duration: 24s; }
-  .hero-canvas { opacity: .58; }
+  .hero-motion__surface { opacity: .22; }
+  .hero-motion__atmosphere { opacity: .54; }
 }
 @keyframes horizon-drift-mobile {
-  from { transform: scale(1.02) translate3d(-4px, 0, 0); }
-  to { transform: scale(1.06) translate3d(4px, -2px, 0); }
+  from { transform: scale(1.02) translate3d(-4px, 18px, 0); }
+  to { transform: scale(1.06) translate3d(4px, 10px, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-parallax { transform: none; transition: none; }
   .hero-parallax .hero-art { animation: none; transform: none; }
-  .hero-canvas { opacity: .52; }
+  .hero-motion__surface,
+  .hero-motion__surface::after,
+  .hero-motion__atmosphere,
+  .hero-motion__flare { animation: none; }
   .motion-toggle { display: none; }
 }
