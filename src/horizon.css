@@ -120,10 +120,21 @@ body { background: #030b0f; }
 .hero-parallax {
   position: absolute;
   inset: -12px;
+  z-index: 0;
   pointer-events: none;
   transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
   transition: transform 1.6s ease-out;
 }
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: .72;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.hero-canvas::after { display: none; }
+.hero-canvas canvas { display: block; width: 100%; height: 100%; }
 .hero-parallax .hero-art {
   animation: horizon-drift 18s ease-in-out infinite alternate;
   transform-origin: 65% 60%;
@@ -153,6 +164,7 @@ body { background: #030b0f; }
 .motion-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
 @media (hover: none), (pointer: coarse) {
   .hero-parallax .hero-art { animation-name: horizon-drift-mobile; animation-duration: 24s; }
+  .hero-canvas { opacity: .58; }
 }
 @keyframes horizon-drift-mobile {
   from { transform: scale(1.02) translate3d(-4px, 0, 0); }
@@ -161,5 +173,6 @@ body { background: #030b0f; }
 @media (prefers-reduced-motion: reduce) {
   .hero-parallax { transform: none; transition: none; }
   .hero-parallax .hero-art { animation: none; transform: none; }
+  .hero-canvas { opacity: .52; }
   .motion-toggle { display: none; }
 }
