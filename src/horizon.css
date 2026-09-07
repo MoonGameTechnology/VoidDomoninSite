@@ -115,3 +115,51 @@ body { background: #030b0f; }
  .hero-inner .hero-note { order: 1; margin-top: 18px; color: #b2cbd2; }
  .hero-inner .hero-actions { order: 2; margin-top: 22px; }
 }
+
+/* Animate only the raster layer; text and actions remain stationary. */
+.hero-parallax {
+  position: absolute;
+  inset: -12px;
+  pointer-events: none;
+  transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
+  transition: transform 1.6s ease-out;
+}
+.hero-parallax .hero-art {
+  animation: horizon-drift 28s ease-in-out infinite alternate;
+  transform-origin: 65% 60%;
+  animation-play-state: paused;
+}
+.hero[data-motion="running"] .hero-art { animation-play-state: running; }
+@keyframes horizon-drift {
+  from { transform: scale(1.015) translate3d(-3px, 2px, 0); }
+  to { transform: scale(1.055) translate3d(3px, -3px, 0); }
+}
+.motion-toggle {
+  position: absolute;
+  bottom: 24px;
+  right: 28px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #47727a;
+  border-radius: 50%;
+  color: #d3e8ed;
+  background: #030b0fcc;
+  cursor: pointer;
+}
+.motion-toggle:hover { border-color: var(--cyan); color: var(--cyan); }
+.motion-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+@media (hover: none), (pointer: coarse) {
+  .hero-parallax .hero-art { animation-name: horizon-drift-mobile; animation-duration: 36s; }
+}
+@keyframes horizon-drift-mobile {
+  from { transform: scale(1.01); }
+  to { transform: scale(1.03); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-parallax { transform: none; transition: none; }
+  .hero-parallax .hero-art { animation: none; transform: none; }
+  .motion-toggle { display: none; }
+}
