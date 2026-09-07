@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { ArrowDown, Pause, Play, CaretDown, Rocket, Coins, Atom, Handshake, Globe, Shield, ChatCircle, Storefront } from '@phosphor-icons/react';
 import { Reveal } from './components/Reveal';
 import { GAME, CONTENT, type Locale, type SiteContent } from './data';
@@ -12,6 +12,10 @@ import {
 } from './i18n';
 
 const asset = (path: string) => import.meta.env.BASE_URL + path;
+
+const HeroScene = lazy(() =>
+  import('./three/HeroScene').then((module) => ({ default: module.HeroScene })),
+);
 
 function LangMenu({ locale, onSelect }: { locale: Locale; onSelect: (l: Locale) => void }) {
   const [open, setOpen] = useState(false);
@@ -146,7 +150,12 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
     <>
       <section className="hero" id="top" ref={scene} data-motion="running">
         <div className="hero-parallax" aria-hidden="true">
-          <img className="hero-art" src={asset('brand/hero-horizon.webp')} alt="" fetchPriority="high" />
+          <img className="hero-art" src={asset('brand/hero-horizon-v2.webp')} alt="" fetchPriority="high" />
+        </div>
+        <div className="hero-canvas" aria-hidden="true">
+          <Suspense fallback={null}>
+            <HeroScene paused={paused} mode="horizon" />
+          </Suspense>
         </div>
         <button className="motion-toggle" type="button" onClick={() => setPaused(value => !value)} aria-label={motionLabel} title={motionLabel} aria-pressed={paused}>
           {paused ? <Play size={18} aria-hidden /> : <Pause size={18} aria-hidden />}
