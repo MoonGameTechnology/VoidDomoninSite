@@ -146,14 +146,26 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
     <>
       <section className="hero" id="top" ref={scene} data-motion="running">
         <div className="hero-parallax" aria-hidden="true">
-          <img className="hero-art" src={asset('brand/hero-horizon-v2.webp')} alt="" fetchPriority="high" />
+          <img className="hero-art" src={asset('brand/hero-clean.webp')} alt="" fetchPriority="high" />
         </div>
         <div className="hero-motion" aria-hidden="true">
           <div className="hero-motion__surface">
-            <img src={asset('brand/hero-horizon-v2.webp')} alt="" />
+            <img src={asset('brand/hero-clean.webp')} alt="" />
           </div>
-          <span className="hero-motion__atmosphere" />
-          <span className="hero-motion__flare" />
+          <div className="hero-motion__stars" />
+          <div className="hero-motion__sun" />
+          <div className="hero-motion__fleet">
+            <span className="fleet-ship fleet-ship--one" />
+            <span className="fleet-ship fleet-ship--two" />
+            <span className="fleet-ship fleet-ship--three" />
+            <span className="fleet-ship fleet-ship--four" />
+            <span className="fleet-ship fleet-ship--five" />
+            <span className="fleet-ship fleet-ship--six" />
+          </div>
+          <div className="hero-motion__orbits">
+            <span className="orbital-planet" />
+            <span className="orbital-moon" />
+          </div>
         </div>
         <button className="motion-toggle" type="button" onClick={() => setPaused(value => !value)} aria-label={motionLabel} title={motionLabel} aria-pressed={paused}>
           {paused ? <Play size={18} aria-hidden /> : <Pause size={18} aria-hidden />}
