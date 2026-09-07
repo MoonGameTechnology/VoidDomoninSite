@@ -146,7 +146,14 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
     <>
       <section className="hero" id="top" ref={scene} data-motion="running">
         <div className="hero-parallax" aria-hidden="true">
-          <img className="hero-art" src={asset('brand/hero-clean.webp')} alt="" fetchPriority="high" />
+          <img
+            className="hero-art"
+            src={asset('brand/hero-clean.webp')}
+            srcSet={`${asset('brand/hero-clean.webp')} 1672w, ${asset('brand/hero-clean-4k.webp')} 3840w`}
+            sizes="100vw"
+            alt=""
+            fetchPriority="high"
+          />
         </div>
         <div className="hero-motion" aria-hidden="true">
           <div className="hero-motion__surface">
