@@ -86,9 +86,9 @@ function Nav({ t, locale, onLocale }: { t: SiteContent; locale: Locale; onLocale
 }
 
 const HORIZON = {
-  ru: { tagline: 'Империи рождаются за горизонтом.', about: 'Об игре', download: 'Скачать альфу', note: 'Android · Тестовый режим с ботами.', story: 'Ваша история начинается с одного мира.', detail: 'Развивайте колонии. Исследуйте технологии. Командуйте флотами.' },
-  en: { tagline: 'Empires are born beyond the horizon.', about: 'About the game', download: 'Download alpha', note: 'Android · Test mode against bots.', story: 'Your story begins with a single world.', detail: 'Develop colonies. Research technologies. Command fleets.' },
-  zh: { tagline: '帝国，诞生于地平线之外。', about: '了解游戏', download: '下载试玩版', note: 'Android · 对战机器人测试模式', story: '您的故事，从一个星球开始。', detail: '发展殖民地。探索科技。指挥舰队。' },
+  ru: { tagline: 'Одна галактика. Тысячи решений.', about: 'Об игре', download: 'Скачать альфу', note: 'Android · Тестовый режим с ботами.', story: 'Война начинается задолго до первого выстрела.', detail: 'Развивайте колонии. Меняйте баланс сил.' },
+  en: { tagline: 'One galaxy. A thousand decisions.', about: 'About the game', download: 'Download alpha', note: 'Android · Test mode against bots.', story: 'War begins long before the first shot.', detail: 'Develop colonies. Shift the balance of power.' },
+  zh: { tagline: '一座银河。无数种选择。', about: '了解游戏', download: '下载试玩版', note: 'Android · 对战机器人测试模式', story: '战争早在第一声炮响前就已开始。', detail: '发展殖民地。改变力量的平衡。' },
 };
 
 function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
@@ -144,7 +144,7 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
   }[locale];
   return (
     <>
-      <section className="hero" id="top" ref={scene} data-motion="paused">
+      <section className="hero" id="top" ref={scene} data-motion="running">
         <div className="hero-parallax" aria-hidden="true">
           <img className="hero-art" src={asset('brand/hero-horizon.webp')} alt="" fetchPriority="high" />
         </div>

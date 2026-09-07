@@ -63,13 +63,13 @@ export const CONTENT: Record<Locale, SiteContent> = {
     meta: {
       title: 'Void Dominion — космическая стратегия в реальном времени',
       description:
-        'Void Dominion — космическая стратегия в реальном времени. Мир живёт круглосуточно: стройте флоты, развивайте экономику, заключайте союзы и захватывайте миры, даже когда вы офлайн. Играбельная альфа на Android.',
+        'Void Dominion — космическая стратегия в реальном времени для игроков, которые привыкли считать ходы наперёд. Развивайте колонии, исследуйте технологии, командуйте флотами и меняйте баланс сил. Играбельная альфа на Android.',
     },
     nav: { features: 'Возможности', factions: 'Фракции', play: 'Играть' },
     hero: {
       eyebrow: 'Real-time · MMO · Стратегия',
       intro:
-        'Мир Void Dominion не останавливается, когда вы выходите. Отдайте флотам приказы на часы вперёд, займитесь своими делами — империя продолжит строить, воевать и торговать. Возвращайтесь и пожинайте плоды.',
+        'Космическая стратегия в реальном времени для тех, кто привык считать ходы наперёд. Выбирайте фракцию, развивайте колонии, исследуйте технологии, командуйте флотами и меняйте баланс сил.',
       download: 'Скачать альфу (Android)',
       browser: 'Играть в браузере',
       apkNote: 'Файл .apk — при установке разрешите «неизвестные источники»',
@@ -78,15 +78,15 @@ export const CONTENT: Record<Locale, SiteContent> = {
     soonBadge: 'Скоро',
     stats: [
       { value: '10', label: 'живых игроков в матче' },
-      { value: '24/7', label: 'мир не останавливается' },
+      { value: '24/7', label: 'кампания в реальном времени' },
       { value: '5', label: 'ресурсов в экономике' },
       { value: '4', label: 'фракции на выбор' },
     ],
     features: {
       head: {
         kicker: 'Что внутри',
-        h2: 'Империя, которая живёт без вас',
-        sub: 'Экономика, армии, наука и интриги в одном непрерывном мире. Пока вы офлайн, приказы выполняются, флоты летят, а рудники копают.',
+        h2: 'Стратегия на масштабе галактики',
+        sub: 'Экономика, исследования, дипломатия и война соединены в одной карте. Выберите фракцию, определите приоритеты и проведите империю через конфликт.',
       },
       items: [
         {
@@ -97,7 +97,7 @@ export const CONTENT: Record<Locale, SiteContent> = {
         {
           icon: '⛏',
           title: 'Экономика на 5 ресурсов',
-          text: 'Развивайте добычу, стройте и налаживайте логистику между мирами. Всё происходит в реальном времени, поэтому побеждает тот, кто планирует наперёд.',
+          text: 'Развивайте добычу, стройте и налаживайте логистику между мирами. Темп кампании задаётся приказами, снабжением и тем, насколько далеко вы планируете.',
         },
         {
           icon: '🔬',
@@ -117,7 +117,7 @@ export const CONTENT: Record<Locale, SiteContent> = {
         {
           icon: '🛡',
           title: '«Хранитель»',
-          text: 'Уходите спать? Передайте империю Хранителю — ИИ подержит оборону и экономику, пока вас нет. Мир не ждёт, но и не бросает.',
+          text: 'Передайте империю Хранителю — ИИ-помощнику для обороны и экономики. Настройте приоритеты и сосредоточьтесь на решениях, которые меняют кампанию.',
         },
       ],
     },
@@ -125,7 +125,7 @@ export const CONTENT: Record<Locale, SiteContent> = {
       head: {
         kicker: 'Дома космоса',
         h2: 'Выберите свою фракцию',
-        sub: 'Четыре дома, каждый со своим бонусом. В матче до десяти командиров делят одну карту — союзники и соперники одновременно.',
+        sub: 'Четыре дома, четыре стиля игры. Выберите бонусы, определите приоритеты и вступите в борьбу за одну карту.',
       },
       items: [
         { name: 'Azure Compact', color: '#35d6e6', passive: '+12% экономика' },
@@ -135,8 +135,8 @@ export const CONTENT: Record<Locale, SiteContent> = {
       ],
     },
     cta: {
-      h2: 'Мир уже идёт. Займите своё место.',
-      text: 'Играбельная альфа доступна на Android: скирмиш против ИИ или онлайн-матч с друзьями. Дальше — больше.',
+      h2: 'Ваш следующий ход начинается здесь.',
+      text: 'Играбельная альфа доступна на Android: скирмиш против ИИ и тестовые онлайн-матчи. Выберите фракцию и проверьте свою стратегию.',
       download: 'Скачать APK',
     },
     upcoming: [
@@ -159,13 +159,13 @@ export const CONTENT: Record<Locale, SiteContent> = {
     meta: {
       title: 'Void Dominion — real-time space strategy',
       description:
-        'Void Dominion is a real-time space strategy game. The world runs 24/7: build fleets, grow your economy, forge alliances and conquer worlds — even while you are offline. Playable alpha on Android.',
+        'Void Dominion is a real-time space strategy for players who think several moves ahead. Develop colonies, research technologies, command fleets and shift the balance of power. Playable alpha on Android.',
     },
     nav: { features: 'Features', factions: 'Factions', play: 'Play' },
     hero: {
       eyebrow: 'Real-time · MMO · Strategy',
       intro:
-        "The world of Void Dominion doesn't stop when you log off. Queue orders for your fleets hours ahead, go about your day — your empire keeps building, fighting and trading. Come back and reap the rewards.",
+        'A real-time space strategy for players who think several moves ahead. Choose a faction, develop colonies, research technologies, command fleets and shift the balance of power.',
       download: 'Download alpha (Android)',
       browser: 'Play in browser',
       apkNote: 'APK file — allow “unknown sources” when installing',
@@ -174,15 +174,15 @@ export const CONTENT: Record<Locale, SiteContent> = {
     soonBadge: 'Soon',
     stats: [
       { value: '10', label: 'live players per match' },
-      { value: '24/7', label: 'the world never stops' },
+      { value: '24/7', label: 'real-time campaign' },
       { value: '5', label: 'resources to manage' },
       { value: '4', label: 'factions to choose from' },
     ],
     features: {
       head: {
         kicker: "What's inside",
-        h2: 'An empire that lives without you',
-        sub: "Economy, armies, science and intrigue in one continuous world. While you're offline, orders are carried out, fleets keep flying and mines keep digging.",
+        h2: 'Strategy at galactic scale',
+        sub: 'Economy, research, diplomacy and war meet on one map. Choose a faction, set your priorities and lead your empire through conflict.',
       },
       items: [
         {
@@ -193,7 +193,7 @@ export const CONTENT: Record<Locale, SiteContent> = {
         {
           icon: '⛏',
           title: 'A 5-resource economy',
-          text: 'Expand mining, develop your worlds and run logistics between them. Everything happens in real time, so the player who plans ahead wins.',
+          text: 'Expand mining, develop your worlds and run logistics between them. The campaign rewards clear orders, strong supply lines and planning several moves ahead.',
         },
         {
           icon: '🔬',
@@ -213,7 +213,7 @@ export const CONTENT: Record<Locale, SiteContent> = {
         {
           icon: '🛡',
           title: 'The Warden',
-          text: "Going to sleep? Hand your empire to the Warden — AI holds your defense and economy while you're away. The world doesn't wait, but it doesn't abandon you either.",
+          text: 'The Warden is an AI assistant for defense and economy. Set priorities and keep your attention on the decisions that shape the campaign.',
         },
       ],
     },
@@ -221,7 +221,7 @@ export const CONTENT: Record<Locale, SiteContent> = {
       head: {
         kicker: 'Houses of space',
         h2: 'Choose your faction',
-        sub: 'Four houses, each with its own bonus. Up to ten commanders share one map — allies and rivals at the same time.',
+        sub: 'Four houses, four ways to play. Choose your bonuses, set your priorities and enter the fight for one map.',
       },
       items: [
         { name: 'Azure Compact', color: '#35d6e6', passive: '+12% economy' },
@@ -231,8 +231,8 @@ export const CONTENT: Record<Locale, SiteContent> = {
       ],
     },
     cta: {
-      h2: 'The world is already turning. Claim your place.',
-      text: 'The playable alpha is out on Android: skirmish against AI or play online with friends. More to come.',
+      h2: 'Your next move starts here.',
+      text: 'The playable alpha is available on Android: skirmish against AI and test online matches. Choose a faction and test your strategy.',
       download: 'Download APK',
     },
     upcoming: [
@@ -255,13 +255,13 @@ export const CONTENT: Record<Locale, SiteContent> = {
     meta: {
       title: 'Void Dominion — 实时太空战略游戏',
       description:
-        'Void Dominion 是一款实时太空战略游戏。世界全天候运转：建造舰队、发展经济、缔结同盟、征服星球——即使您不在线。Android 试玩版现已推出。',
+        'Void Dominion 是一款面向策略老手的实时太空战略游戏。发展殖民地、研究科技、指挥舰队，改变银河的力量平衡。Android 试玩版现已推出。',
     },
     nav: { features: '特色', factions: '阵营', play: '开始游戏' },
     hero: {
       eyebrow: '实时 · MMO · 战略',
       intro:
-        'Void Dominion 的世界不会因您下线而停止。提前给舰队下达数小时的指令，去忙自己的事——帝国会继续建造、作战和贸易。回来时坐享成果。',
+        '面向策略老手的实时太空战略游戏。选择阵营、发展殖民地、研究科技、指挥舰队，改变银河的力量平衡。',
       download: '下载测试版（Android）',
       browser: '浏览器试玩',
       apkNote: 'APK 文件——安装时请允许「未知来源」',
@@ -270,15 +270,15 @@ export const CONTENT: Record<Locale, SiteContent> = {
     soonBadge: '即将推出',
     stats: [
       { value: '10', label: '每场实时玩家' },
-      { value: '24/7', label: '世界永不停歇' },
+      { value: '24/7', label: '实时战役节奏' },
       { value: '5', label: '种经济资源' },
       { value: '4', label: '个可选阵营' },
     ],
     features: {
       head: {
         kicker: '游戏内容',
-        h2: '一个离开你也在运转的帝国',
-        sub: '经济、军队、科技与阴谋，汇聚在一个永不停歇的世界。您离线时，指令照常执行，舰队继续飞行，矿场持续开采。',
+        h2: '银河尺度的战略',
+        sub: '经济、研究、外交与战争汇聚在同一张地图。选择阵营，确定优先级，带领帝国穿越冲突。',
       },
       items: [
         {
@@ -289,7 +289,7 @@ export const CONTENT: Record<Locale, SiteContent> = {
         {
           icon: '⛏',
           title: '五种资源的经济',
-          text: '扩大开采、建设星球、打通星际物流。一切都实时进行，善于提前规划者获胜。',
+          text: '扩大开采、建设星球、打通星际物流。清晰的指令、可靠的补给线与提前规划，决定战局走向。',
         },
         {
           icon: '🔬',
@@ -309,7 +309,7 @@ export const CONTENT: Record<Locale, SiteContent> = {
         {
           icon: '🛡',
           title: '「守护者」',
-          text: '要去睡觉了？把帝国交给守护者——AI 会在您离开时守住防线和经济。世界不会等待，但也不会抛弃您。',
+          text: '「守护者」是负责防线与经济的 AI 助手。设定优先级，把注意力留给真正改变战局的决策。',
         },
       ],
     },
@@ -317,7 +317,7 @@ export const CONTENT: Record<Locale, SiteContent> = {
       head: {
         kicker: '太空豪门',
         h2: '选择您的阵营',
-        sub: '四大家族，各有专属加成。最多十名指挥官共享一张地图——既是盟友，也是对手。',
+        sub: '四大家族，四种玩法。选择专属加成，确定优先级，加入同一张地图的争夺。',
       },
       items: [
         { name: 'Azure Compact', color: '#35d6e6', passive: '+12% 经济' },
@@ -327,8 +327,8 @@ export const CONTENT: Record<Locale, SiteContent> = {
       ],
     },
     cta: {
-      h2: '世界已经开始运转。占据您的位置。',
-      text: 'Android 试玩版现已推出：与 AI 遭遇战，或与好友在线对战。更多内容即将到来。',
+      h2: '下一步，从这里开始。',
+      text: 'Android 试玩版现已推出：与 AI 遭遇战，或参与测试在线对战。选择阵营，验证您的战略。',
       download: '下载 APK',
     },
     upcoming: [

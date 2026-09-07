@@ -125,14 +125,14 @@ body { background: #030b0f; }
   transition: transform 1.6s ease-out;
 }
 .hero-parallax .hero-art {
-  animation: horizon-drift 28s ease-in-out infinite alternate;
+  animation: horizon-drift 18s ease-in-out infinite alternate;
   transform-origin: 65% 60%;
   animation-play-state: paused;
 }
 .hero[data-motion="running"] .hero-art { animation-play-state: running; }
 @keyframes horizon-drift {
-  from { transform: scale(1.015) translate3d(-3px, 2px, 0); }
-  to { transform: scale(1.055) translate3d(3px, -3px, 0); }
+  from { transform: scale(1.02) translate3d(-8px, 4px, 0); }
+  to { transform: scale(1.085) translate3d(8px, -5px, 0); }
 }
 .motion-toggle {
   position: absolute;
@@ -152,11 +152,11 @@ body { background: #030b0f; }
 .motion-toggle:hover { border-color: var(--cyan); color: var(--cyan); }
 .motion-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
 @media (hover: none), (pointer: coarse) {
-  .hero-parallax .hero-art { animation-name: horizon-drift-mobile; animation-duration: 36s; }
+  .hero-parallax .hero-art { animation-name: horizon-drift-mobile; animation-duration: 24s; }
 }
 @keyframes horizon-drift-mobile {
-  from { transform: scale(1.01); }
-  to { transform: scale(1.03); }
+  from { transform: scale(1.02) translate3d(-4px, 0, 0); }
+  to { transform: scale(1.06) translate3d(4px, -2px, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-parallax { transform: none; transition: none; }
