@@ -148,34 +148,33 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
         <div className="hero-parallax" aria-hidden="true">
           <img
             className="hero-art"
-            src={asset('brand/hero-clean.webp')}
-            srcSet={`${asset('brand/hero-clean.webp')} 1672w, ${asset('brand/hero-clean-4k.webp')} 3840w`}
+            src={asset('brand/hero-starfield.webp')}
+            srcSet={`${asset('brand/hero-starfield.webp')} 1672w, ${asset('brand/hero-starfield-4k.webp')} 3840w`}
             sizes="100vw"
             alt=""
             fetchPriority="high"
           />
         </div>
         <div className="hero-motion" aria-hidden="true">
-          <div className="hero-motion__surface">
-            <img src={asset('brand/hero-clean.webp')} alt="" />
-          </div>
           <div className="hero-motion__stars" />
           <div className="hero-motion__dust" />
-          <div className="hero-motion__sun" />
-          <div className="hero-motion__flare" />
-          <div className="hero-motion__fleet">
-            <span className="fleet-ship fleet-ship--one" />
-            <span className="fleet-ship fleet-ship--two" />
-            <span className="fleet-ship fleet-ship--three" />
-            <span className="fleet-ship fleet-ship--four" />
-            <span className="fleet-ship fleet-ship--five" />
-            <span className="fleet-ship fleet-ship--six" />
+          <div className="hero-motion__star-signal" />
+          <div className="hero-motion__veil" />
+          <div className="hero-console hero-console--left">
+            <div className="hero-console__header"><span>ORBITAL CONSOLE</span><b>LIVE</b></div>
+            <div className="hero-console__radar">
+              <span className="console-radar__ring console-radar__ring--one" />
+              <span className="console-radar__ring console-radar__ring--two" />
+              <span className="console-radar__sweep" />
+              <i className="console-radar__dot console-radar__dot--one" />
+              <i className="console-radar__dot console-radar__dot--two" />
+            </div>
+            <div className="hero-console__readout"><span>SECTOR 07</span><span>RANGE 18.4 AU</span></div>
           </div>
-          <div className="hero-motion__orbits">
-            <span className="orbital-ring orbital-ring--one" />
-            <span className="orbital-ring orbital-ring--two" />
-            <span className="orbital-planet" />
-            <span className="orbital-moon" />
+          <div className="hero-console hero-console--right">
+            <div className="hero-console__header"><span>VOID LINK</span><b>SYNC</b></div>
+            <div className="hero-console__bars"><i /><i /><i /><i /><i /><i /><i /><i /></div>
+            <div className="hero-console__readout"><span>VECTOR 03—19—07</span><span>NO SIGNAL / NOISE FLOOR</span></div>
           </div>
         </div>
         <button className="motion-toggle" type="button" onClick={() => setPaused(value => !value)} aria-label={motionLabel} title={motionLabel} aria-pressed={paused}>
@@ -184,8 +183,6 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
         <div className="hero-inner">
           <p className="eyebrow">{t.hero.eyebrow}</p>
           <div className="hero-title-wrap">
-            <span className="title-orbit title-orbit--one" aria-hidden="true" />
-            <span className="title-orbit title-orbit--two" aria-hidden="true" />
             <h1 className="hero-title" aria-label="VOID DOMINION">
               <span className="hero-title__glow" aria-hidden="true">VOID DOMINION</span>
               <span className="hero-title__letters" aria-hidden="true">
