@@ -1,5 +1,5 @@
-import { Suspense, lazy, useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowDown, CaretDown, Rocket, Coins, Atom, Handshake, Globe, Shield, ChatCircle, Storefront } from '@phosphor-icons/react';
 import { Reveal } from './components/Reveal';
 import { GAME, CONTENT, type Locale, type SiteContent } from './data';
 import {
@@ -10,10 +10,6 @@ import {
   persistLocale,
   applyLocaleToDocument,
 } from './i18n';
-
-const HeroScene = lazy(() =>
-  import('./three/HeroScene').then((m) => ({ default: m.HeroScene })),
-);
 
 const asset = (path: string) => import.meta.env.BASE_URL + path;
 
@@ -47,7 +43,7 @@ function LangMenu({ locale, onSelect }: { locale: Locale; onSelect: (l: Locale) 
         aria-label="Language"
         onClick={() => setOpen((o) => !o)}
       >
-        {LOCALE_LABEL[locale]} <span className="lang-caret" aria-hidden>▾</span>
+        {LOCALE_LABEL[locale]} <CaretDown size={12} aria-hidden />
       </button>
       {open && (
         <ul className="lang-list" role="listbox" aria-label="Language">
@@ -78,90 +74,42 @@ function Nav({ t, locale, onLocale }: { t: SiteContent; locale: Locale; onLocale
     <header className="nav">
       <a className="brand" href="#top">
         <img src={asset('brand/icon-small.png')} alt="" width={34} height={34} />
-        <span>VOID<b>DOMINION</b></span>
+        <span>VOID <b>DOMINION</b></span>
       </a>
       <nav className="nav-links">
-        <a href="#features">{t.nav.features}</a>
+        <a href="#features">{HORIZON[locale].about}</a>
         <a href="#factions">{t.nav.factions}</a>
         <LangMenu locale={locale} onSelect={onLocale} />
-        <a className="nav-cta" href="#play">{t.nav.play}</a>
       </nav>
     </header>
   );
 }
 
-function Hero({ t }: { t: SiteContent }) {
+const HORIZON = {
+  ru: { tagline: 'Империи рождаются за горизонтом.', about: 'Об игре', download: 'Скачать альфу', note: 'Android · Тестовый режим с ботами.', story: 'Ваша история начинается с одного мира.', detail: 'Развивайте колонии. Исследуйте технологии. Командуйте флотами.' },
+  en: { tagline: 'Empires are born beyond the horizon.', about: 'About the game', download: 'Download alpha', note: 'Android · Test mode against bots.', story: 'Your story begins with a single world.', detail: 'Develop colonies. Research technologies. Command fleets.' },
+  zh: { tagline: '帝国，诞生于地平线之外。', about: '了解游戏', download: '下载试玩版', note: 'Android · 对战机器人测试模式', story: '您的故事，从一个星球开始。', detail: '发展殖民地。探索科技。指挥舰队。' },
+};
+
+function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
+  const copy = HORIZON[locale];
   return (
-    <section className="hero" id="top">
-      <div className="hero-canvas">
-        <Suspense fallback={null}>
-          <HeroScene />
-        </Suspense>
-      </div>
-      <div className="hero-inner">
-        <motion.p
-          className="eyebrow"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
-          {t.hero.eyebrow}
-        </motion.p>
-        <motion.h1
-          className="hero-title"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.08 }}
-        >
-          {GAME.name}
-        </motion.h1>
-        <motion.p
-          className="hero-tagline"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.16 }}
-        >
-          {t.hero.intro}
-        </motion.p>
-        <motion.div
-          className="hero-actions"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.24 }}
-        >
-          <a className="btn btn-primary" href={GAME.apkUrl}>
-            {t.hero.download}
-          </a>
-          <a
-            className="btn btn-ghost btn-soon"
-            href={GAME.browserUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t.hero.browser}
-          </a>
-        </motion.div>
-        <motion.p
-          className="hero-note"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.32 }}
-        >
-          {t.hero.modeNote}
-        </motion.p>
-        <motion.p
-          className="hero-note"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.36 }}
-        >
-          {t.hero.apkNote}
-        </motion.p>
-      </div>
-      <div className="scroll-hint" aria-hidden>
-        <span />
-      </div>
-    </section>
+    <>
+      <section className="hero" id="top">
+        <img className="hero-art" src={asset('brand/hero-horizon.webp')} alt="" fetchPriority="high" />
+        <div className="hero-inner">
+          <p className="eyebrow">{t.hero.eyebrow}</p>
+          <h1 className="hero-title">VOID DOMINION</h1>
+          <p className="hero-tagline">{copy.tagline}</p>
+          <div className="hero-actions">
+            <a className="btn btn-primary" href={GAME.apkUrl}>{copy.download}<ArrowDown size={22} aria-hidden /></a>
+            <a className="btn btn-ghost" href={GAME.browserUrl} target="_blank" rel="noopener noreferrer">{t.hero.browser}<Globe size={22} aria-hidden /></a>
+          </div>
+          <p className="hero-note">{copy.note}</p>
+        </div>
+      </section>
+      <div className="story-strip"><p>{copy.story}</p><span>{copy.detail}</span></div>
+    </>
   );
 }
 
@@ -188,6 +136,7 @@ function SectionHeader({ head }: { head: SiteContent['features']['head'] }) {
   );
 }
 
+const featureIcons = [Rocket, Coins, Atom, Handshake, Globe, Shield];
 function Features({ t }: { t: SiteContent }) {
   return (
     <section className="section" id="features">
@@ -195,7 +144,7 @@ function Features({ t }: { t: SiteContent }) {
       <div className="feature-grid">
         {t.features.items.map((f, i) => (
           <Reveal key={f.title} delay={(i % 3) * 0.08} className="card">
-            <div className="card-icon" aria-hidden>{f.icon}</div>
+            <div className="card-icon" aria-hidden>{(() => { const Icon = featureIcons[i]; return <Icon size={26} weight="light" />; })()}</div>
             <h3>{f.title}</h3>
             <p>{f.text}</p>
           </Reveal>
@@ -212,7 +161,7 @@ function Factions({ t }: { t: SiteContent }) {
       <div className="faction-grid">
         {t.factions.items.map((f, i) => (
           <Reveal key={f.name} delay={i * 0.07} className="faction">
-            <span className="faction-orb" style={{ ['--fc' as string]: f.color }} />
+            <span className="faction-index" style={{ color: f.color }}>{String(i + 1).padStart(2, '0')}</span>
             <div>
               <h3>{f.name}</h3>
               <p style={{ color: f.color }}>{f.passive}</p>
@@ -233,7 +182,7 @@ function CTA({ t }: { t: SiteContent }) {
         <div className="hero-actions">
           <a className="btn btn-primary" href={GAME.apkUrl}>{t.cta.download}</a>
           <a
-            className="btn btn-ghost btn-soon"
+            className="btn btn-ghost"
             href={GAME.browserUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -243,11 +192,12 @@ function CTA({ t }: { t: SiteContent }) {
         </div>
         <p className="hero-note">{t.hero.apkNote}</p>
         <div className="soon-grid">
-          {t.upcoming.map((u) => {
+          {t.upcoming.map((u, i) => {
+            const Icon = [Globe, ChatCircle, Storefront][i];
             const inner = (
               <>
-                <span className="soon-icon" aria-hidden>{u.icon}</span>
-                <span className="soon-badge">{t.soonBadge}</span>
+                <span className="soon-icon" aria-hidden><Icon size={24} weight="light" /></span>
+                {!u.href && <span className="soon-badge">{t.soonBadge}</span>}
                 <h3>{u.title}</h3>
                 <p>{u.text}</p>
               </>
@@ -294,7 +244,7 @@ export default function App() {
     <>
       <Nav t={t} locale={locale} onLocale={selectLocale} />
       <main>
-        <Hero t={t} />
+        <Hero t={t} locale={locale} />
         <Stats t={t} />
         <Features t={t} />
         <Factions t={t} />
