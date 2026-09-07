@@ -2,17 +2,15 @@
 
 Лендинг для игры [**Void Dominion**](https://github.com/Moonwuk/MoonGame) — real-time
 космической grand strategy с массовым мультиплеером. Тёмный космический стиль игры,
-интерактивная 3D-сцена в hero-блоке и адаптивная вёрстка.
+кинематографичный hero-блок с лёгким движением поверхности планеты и адаптивная вёрстка.
 
-## Лендинг: https://moonwuk.github.io/Void-Domonin-site/
+## Лендинг: https://moongametechnology.github.io/VoidDomoninSite/
 
 ## Сайт: [https://moonwuk.github.io/MoonGame/](https://moonwuk.github.io/MoonGame/)
 
 ## Стек
 
 - **Vite** + **React** + **TypeScript**
-- **three.js** через **@react-three/fiber** и **@react-three/drei** — 3D-сцена (планета,
-  атмосфера-fresnel, орбитальные флоты, звёздное поле)
 - **framer-motion** — анимации появления секций
 - Палитра и типографика зеркалят тему прототипа (cyan `#35d6e6` на тёмном космосе)
 
@@ -32,7 +30,7 @@ npm run lint     # oxlint
 
 - Полностью адаптивный layout (desktop / планшет / мобайл).
 - `prefers-reduced-motion` отключает анимации для чувствительных пользователей.
-- 3D-сцена рендерится в фоне и не блокирует контент.
+- Движение hero рендерится в фоне и не блокирует контент.
 
 ## Деплой
 
