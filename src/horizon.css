@@ -351,10 +351,242 @@ body { background: #030b0f; }
   .hero-motion__surface,
   .hero-motion__surface::after,
   .hero-motion__stars,
+  .hero-motion__dust,
   .hero-motion__sun,
+  .hero-motion__flare,
   .fleet-ship,
+  .orbital-ring,
   .orbital-planet,
   .orbital-planet::before,
-  .orbital-moon { animation: none; }
+  .orbital-moon,
+  .title-orbit,
+  .hero-title__glow,
+  .hero-letter { animation: none; }
   .motion-toggle { display: none; }
+}
+
+/* Give the wordmark its own depth plane: a restrained title animation keeps
+   VOID DOMINION alive without competing with the horizon and CTA. */
+.hero-title-wrap {
+  position: relative;
+  display: inline-block;
+  margin-top: 26px;
+  isolation: isolate;
+}
+.hero-title-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 18% -18% 10%;
+  z-index: -2;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(53, 214, 230, .2), rgba(53, 214, 230, .05) 46%, transparent 73%);
+  filter: blur(16px);
+  opacity: .55;
+  animation: title-aura 8s ease-in-out infinite;
+}
+.hero-title-wrap::after {
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -12px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(143, 244, 250, .65) 28%, rgba(255, 255, 255, .85) 50%, rgba(143, 244, 250, .65) 72%, transparent);
+  box-shadow: 0 0 15px rgba(53, 214, 230, .52);
+  opacity: .4;
+  transform: scaleX(.2);
+  transform-origin: center;
+  animation: title-baseline 8s ease-in-out infinite;
+}
+.hero-title {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  margin-top: 0;
+  transform: translateZ(0);
+  white-space: nowrap;
+}
+.hero-title__glow,
+.hero-title__letters {
+  display: inline-flex;
+  align-items: baseline;
+}
+.hero-title__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  color: #35d6e6;
+  opacity: .22;
+  filter: blur(11px);
+  transform: translate3d(0, 6px, -2px) scale(1.015);
+  animation: title-glow 7s ease-in-out infinite;
+  pointer-events: none;
+}
+.hero-title__letters {
+  position: relative;
+  z-index: 1;
+  perspective: 700px;
+}
+.hero-letter {
+  position: relative;
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(110deg, #f6ffff 0%, #d7edf0 34%, #8ff4fa 49%, #ffffff 57%, #d7edf0 78%, #f6ffff 100%);
+  background-size: 260% 100%;
+  background-position: 170% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .46), 0 7px 18px rgba(0, 0, 0, .42), 0 0 18px rgba(53, 214, 230, .16);
+  transform-origin: 50% 100%;
+  animation: title-letter-shimmer 9s cubic-bezier(.42, 0, .2, 1) infinite;
+  animation-delay: calc(var(--letter-index) * 90ms);
+}
+.title-orbit {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border: 1px solid rgba(143, 244, 250, .24);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(53, 214, 230, .12);
+  transform-origin: center;
+  animation: title-orbit-spin 18s linear infinite;
+}
+.title-orbit::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 24%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #bdfbff;
+  box-shadow: 0 0 9px 2px rgba(53, 214, 230, .72);
+}
+.title-orbit--one {
+  inset: -28px -42px -18px;
+  transform: rotate(-8deg) skewX(-10deg);
+}
+.title-orbit--two {
+  inset: -42px -18px -3px;
+  border-color: rgba(180, 140, 255, .2);
+  animation-duration: 26s;
+  animation-direction: reverse;
+  transform: rotate(14deg) skewX(8deg);
+}
+.hero-motion__dust {
+  position: absolute;
+  inset: -10%;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 18% 38%, rgba(143, 244, 250, .58) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 37% 18%, rgba(255, 238, 205, .48) 0 .8px, transparent 1.6px),
+    radial-gradient(circle at 83% 48%, rgba(180, 140, 255, .42) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 67% 23%, rgba(255, 255, 255, .4) 0 .7px, transparent 1.5px);
+  background-size: 280px 210px, 410px 320px, 560px 390px, 730px 470px;
+  opacity: .22;
+  mix-blend-mode: screen;
+  animation: dust-drift 48s ease-in-out infinite alternate;
+}
+.hero-motion__flare {
+  position: absolute;
+  top: 56.5%;
+  left: 69%;
+  z-index: 2;
+  width: 15%;
+  height: 15%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 248, 217, .5) 0 2%, rgba(255, 224, 164, .22) 8%, transparent 64%);
+  filter: blur(1px);
+  opacity: .44;
+  mix-blend-mode: screen;
+  animation: flare-breathe 6s ease-in-out infinite;
+}
+.hero-motion__flare::before,
+.hero-motion__flare::after {
+  content: '';
+  position: absolute;
+  inset: 49% -45%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 242, 200, .7), transparent);
+  box-shadow: 0 0 12px rgba(255, 226, 169, .5);
+}
+.hero-motion__flare::after {
+  inset: -45% 49%;
+  width: 1px;
+  height: auto;
+  background: linear-gradient(180deg, transparent, rgba(255, 242, 200, .58), transparent);
+}
+.orbital-ring {
+  position: absolute;
+  top: 15%;
+  right: 5.5%;
+  width: clamp(75px, 9vw, 140px);
+  aspect-ratio: 1.9;
+  border: 1px solid rgba(143, 244, 250, .2);
+  border-radius: 50%;
+  transform: rotate(-23deg);
+  transform-origin: center;
+  opacity: .62;
+  animation: orbital-ring-spin 22s linear infinite;
+}
+.orbital-ring--one { border-left-color: transparent; border-right-color: rgba(143, 244, 250, .46); }
+.orbital-ring--two {
+  width: clamp(92px, 11vw, 170px);
+  right: 4.2%;
+  top: 14%;
+  border-color: rgba(180, 140, 255, .16);
+  border-top-color: transparent;
+  transform: rotate(28deg);
+  animation-duration: 31s;
+  animation-direction: reverse;
+}
+.hero[data-motion="paused"] .hero-motion__dust,
+.hero[data-motion="paused"] .hero-motion__flare,
+.hero[data-motion="paused"] .orbital-ring,
+.hero[data-motion="paused"] .title-orbit,
+.hero[data-motion="paused"] .hero-title__glow,
+.hero[data-motion="paused"] .hero-letter { animation-play-state: paused; }
+@keyframes title-letter-shimmer {
+  0%, 56%, 100% { background-position: 170% 0; transform: translateY(0) rotateX(0deg); }
+  64% { background-position: 36% 0; transform: translateY(-2px) rotateX(4deg); }
+  73% { background-position: -70% 0; transform: translateY(0) rotateX(0deg); }
+}
+@keyframes title-glow {
+  0%, 100% { opacity: .16; transform: translate3d(0, 6px, -2px) scale(1.01); }
+  45% { opacity: .32; transform: translate3d(0, 4px, -2px) scale(1.025); }
+}
+@keyframes title-aura {
+  0%, 100% { opacity: .42; transform: scale(.92); }
+  50% { opacity: .68; transform: scale(1.08); }
+}
+@keyframes title-baseline {
+  0%, 100% { opacity: .18; transform: scaleX(.15); }
+  48% { opacity: .56; transform: scaleX(1); }
+  68% { opacity: .28; transform: scaleX(.7); }
+}
+@keyframes title-orbit-spin {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
+}
+@keyframes dust-drift {
+  from { transform: translate3d(-1.5%, 1%, 0) scale(1.01); opacity: .14; }
+  to { transform: translate3d(1.5%, -1%, 0) scale(1.06); opacity: .3; }
+}
+@keyframes flare-breathe {
+  0%, 100% { opacity: .26; transform: scale(.86); }
+  50% { opacity: .56; transform: scale(1.12); }
+}
+@keyframes orbital-ring-spin {
+  from { rotate: -23deg; transform: scale(.98); }
+  to { rotate: 337deg; transform: scale(1.02); }
+}
+@media (max-width: 620px) {
+  .hero-title-wrap { margin-top: 28px; }
+  .title-orbit--one { inset: -19px -22px -12px; }
+  .title-orbit--two { inset: -28px -8px -2px; }
+  .hero-title-wrap::after { bottom: -9px; }
+  .hero-motion__flare { left: 64%; top: 59%; width: 24%; height: 18%; }
+  .orbital-ring { right: 5%; top: 17%; width: 76px; }
+  .orbital-ring--two { right: 2%; top: 16%; width: 94px; }
 }
