@@ -56,27 +56,14 @@ body { background: var(--bg); }
 .hero-art {
   width: 100%; height: 100%; object-fit: cover; object-position: 55% center;
   opacity: .7;
-  transform-origin: 87% 24%;
-  animation: sky-drift 48s ease-in-out infinite alternate;
+  animation: sky-glow 48s ease-in-out infinite alternate;
 }
 .hero-motion { position: absolute; z-index: -1; inset: 0; pointer-events: none; overflow: hidden; }
 .hero-motion__veil {
   position: absolute; inset: 0;
   background: radial-gradient(ellipse at 50% 38%, #02091580, transparent 60%), linear-gradient(180deg, #0207123d, transparent 35%, #03081057);
 }
-.hero-motion__stars, .hero-motion__dust { position: absolute; inset: -5%; mix-blend-mode: screen; }
-.hero-motion__stars {
-  background-image: radial-gradient(circle at 18% 24%, #e0fbff 0 .8px, transparent 1.6px), radial-gradient(circle at 76% 48%, #97dfff 0 1px, transparent 1.8px), radial-gradient(circle at 30% 86%, #e1d5ff 0 .7px, transparent 1.4px);
-  background-size: 470px 380px, 730px 660px, 960px 710px;
-  opacity: .3;
-  animation: starlight 11s ease-in-out infinite alternate;
-}
-.hero-motion__dust {
-  background-image: radial-gradient(circle at 43% 16%, #aafcff 0 1px, transparent 2px), radial-gradient(circle at 82% 72%, #bdc3ff 0 .8px, transparent 1.6px);
-  background-size: 510px 420px, 760px 620px;
-  opacity: .2;
-  animation: dust-drift 40s ease-in-out infinite alternate;
-}
+.hero-flight { position: absolute; inset: 0; display: block; width: 100%; height: 100%; pointer-events: none; }
 .bridge-reticle {
   position: absolute; top: 29%; bottom: 31%; width: 25px;
   display: flex; flex-direction: column; align-items: center; justify-content: space-between;
@@ -262,9 +249,7 @@ body { background: var(--bg); }
 .footer { margin-top: 70px; }
 
 /* Animate light and decorative geometry; controls remain still. */
-@keyframes sky-drift { from { transform: scale(1.015); opacity: .65; } to { transform: scale(1.055); opacity: .8; } }
-@keyframes starlight { from { opacity: .16; transform: translate3d(0, 0, 0); } to { opacity: .4; transform: translate3d(4px, 2px, 0); } }
-@keyframes dust-drift { from { transform: translate3d(-12px, 10px, 0); opacity: .13; } to { transform: translate3d(16px, -10px, 0); opacity: .32; } }
+@keyframes sky-glow { from { opacity: .65; } to { opacity: .8; } }
 @keyframes glass-light { 0%, 100% { background-position: 100% 0; opacity: .45; } 50% { background-position: 0% 0; opacity: 1; } }
 @keyframes projection-aura { 0%, 100% { transform: scale(.9); opacity: .6; } 50% { transform: scale(1.12); opacity: 1; } }
 @keyframes glyph-resonance { 0%, 100% { background-position: 100% 50%; transform: translateY(0); opacity: .85; } 45% { background-position: 0% 50%; transform: translateY(-1.5px); opacity: 1; } 70% { transform: translateY(.5px); opacity: .92; } }

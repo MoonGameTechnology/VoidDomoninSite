@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { ArrowDown, Pause, Play, CaretDown, Rocket, Coins, Atom, Handshake, Globe, Shield, ChatCircle, Storefront } from '@phosphor-icons/react';
 import { Reveal } from './components/Reveal';
+import { StarFlight } from './components/StarFlight';
 import { GAME, CONTENT, type Locale, type SiteContent } from './data';
 import {
   LOCALES,
@@ -143,6 +144,7 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
   const bridge = BRIDGE[locale];
   const scene = useRef<HTMLElement>(null);
   const [paused, setPaused] = useState(false);
+  const [motionActive, setMotionActive] = useState(false);
   useEffect(() => {
     const element = scene.current;
     if (!element) return;
@@ -155,7 +157,7 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
     };
     const sync = () => {
       const active = !paused && !reduced.matches && visible && !document.hidden;
-      element.dataset.motion = active ? 'running' : 'paused';
+      setMotionActive(active);
       if (!active || !mouse.matches) reset();
     };
     const move = (event: PointerEvent) => {
@@ -192,7 +194,7 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
   }[locale];
   return (
     <>
-      <section className="hero" id="top" ref={scene} data-motion="paused">
+      <section className="hero" id="top" ref={scene} data-motion={motionActive ? 'running' : 'paused'}>
         <div className="hero-parallax" aria-hidden="true">
           <img
             className="hero-art"
@@ -206,9 +208,8 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
           />
         </div>
         <div className="hero-motion" aria-hidden="true">
-          <div className="hero-motion__stars" />
-          <div className="hero-motion__dust" />
           <div className="hero-motion__veil" />
+          <StarFlight running={motionActive} />
           <div className="bridge-reticle bridge-reticle--left"><span>− 07</span><i /><span>+ 19</span></div>
           <div className="bridge-reticle bridge-reticle--right"><span>03 +</span><i /><span>07 −</span></div>
         </div>
