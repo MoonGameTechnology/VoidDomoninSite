@@ -86,13 +86,61 @@ function Nav({ t, locale, onLocale }: { t: SiteContent; locale: Locale; onLocale
 }
 
 const HORIZON = {
-  ru: { tagline: 'Одна галактика. Тысячи решений.', about: 'Об игре', download: 'Скачать альфу', note: 'Android · Тестовый режим с ботами.', story: 'Война начинается задолго до первого выстрела.', detail: 'Развивайте колонии. Меняйте баланс сил.' },
-  en: { tagline: 'One galaxy. A thousand decisions.', about: 'About the game', download: 'Download alpha', note: 'Android · Test mode against bots.', story: 'War begins long before the first shot.', detail: 'Develop colonies. Shift the balance of power.' },
-  zh: { tagline: '一座银河。无数种选择。', about: '了解游戏', download: '下载试玩版', note: 'Android · 对战机器人测试模式', story: '战争早在第一声炮响前就已开始。', detail: '发展殖民地。改变力量的平衡。' },
+  ru: { tagline: ['Одна галактика.', 'Тысячи решений.'], about: 'Об игре', download: 'Скачать альфу', note: 'Android · Тестовый режим с ботами.', story: 'Война начинается задолго до первого выстрела.', detail: 'Развивайте колонии. Меняйте баланс сил.' },
+  en: { tagline: ['One galaxy.', 'A thousand decisions.'], about: 'About the game', download: 'Download alpha', note: 'Android · Test mode against bots.', story: 'War begins long before the first shot.', detail: 'Develop colonies. Shift the balance of power.' },
+  zh: { tagline: ['一座银河。', '无数种选择。'], about: '了解游戏', download: '下载试玩版', note: 'Android · 对战机器人测试模式', story: '战争早在第一声炮响前就已开始。', detail: '发展殖民地。改变力量的平衡。' },
 };
+
+const BRIDGE = {
+  ru: { station: 'Командный мостик', alpha: 'Альфа-версия', briefing: 'Открыть брифинг', motion: 'Анимация' },
+  en: { station: 'Command bridge', alpha: 'Alpha version', briefing: 'Open briefing', motion: 'Animation' },
+  zh: { station: '指挥舰桥', alpha: 'Alpha 测试版', briefing: '查看简报', motion: '动画' },
+};
+
+// These instruments are part of the decorative bridge, not live game telemetry.
+function BridgeInstruments() {
+  return (
+    <div className="bridge-instruments" aria-hidden="true">
+      <div className="instrument instrument--radar">
+        <div className="instrument-heading"><span>ORBITAL SCAN</span><span className="instrument-code">01</span></div>
+        <div className="radar">
+          <svg className="radar-grid" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="94" strokeDasharray="1 8" />
+            <circle cx="100" cy="100" r="80" />
+            <circle cx="100" cy="100" r="53" />
+            <circle cx="100" cy="100" r="26" />
+            <path d="M100 12v176M12 100h176M38 38l124 124M38 162 162 38" />
+            <path className="radar-route" d="m44 125 30-58 65 53 16-70" strokeDasharray="3 5" />
+          </svg>
+          <span className="radar-sweep" />
+          <span className="radar-orbit"><i /></span>
+          <i className="radar-contact radar-contact--one" />
+          <i className="radar-contact radar-contact--two" />
+          <i className="radar-contact radar-contact--three" />
+          <span className="radar-center" />
+        </div>
+        <div className="instrument-footer"><span>SECTOR / 07</span><span>18.4 AU</span></div>
+      </div>
+      <div className="instrument instrument--signal">
+        <div className="instrument-heading"><span>DEEP SPACE</span><span className="instrument-code">02</span></div>
+        <div className="signal-coordinate"><small>VECTOR</small><span>03<span>·</span>19<span>·</span>07</span></div>
+        <div className="signal-wave">
+          <svg viewBox="0 0 240 60" fill="none">
+            <path className="signal-grid" d="M0 15h240M0 30h240M0 45h240M40 0v60M80 0v60M120 0v60M160 0v60M200 0v60" />
+            <path className="signal-path" d="M0 30h20l5-4 5 8 6-16 7 27 7-20 6 5h24l6-10 6 20 8-35 9 49 8-29 6 5h27l6-6 7 11 7-17 8 24 7-16 6 4h49" />
+            <path className="signal-trace" pathLength="100" d="M0 30h20l5-4 5 8 6-16 7 27 7-20 6 5h24l6-10 6 20 8-35 9 49 8-29 6 5h27l6-6 7 11 7-17 8 24 7-16 6 4h49" />
+          </svg>
+        </div>
+        <div className="signal-bars">{[28, 46, 65, 42, 80, 58, 92, 74, 48, 66, 36, 52].map((height, index) => <i key={index} style={{ '--bar-height': `${height}%`, '--bar-index': index } as CSSProperties} />)}</div>
+        <div className="instrument-footer"><span>FREQUENCY / ∞</span><span className="signal-status">SYNC</span></div>
+      </div>
+    </div>
+  );
+}
 
 function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
   const copy = HORIZON[locale];
+  const bridge = BRIDGE[locale];
   const scene = useRef<HTMLElement>(null);
   const [paused, setPaused] = useState(false);
   useEffect(() => {
@@ -138,13 +186,13 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
     };
   }, [paused]);
   const motionLabel = {
-    ru: paused ? 'Включить движение фона' : 'Остановить движение фона',
-    en: paused ? 'Resume background motion' : 'Pause background motion',
-    zh: paused ? '恢复背景动画' : '暂停背景动画',
+    ru: paused ? 'Включить анимацию' : 'Остановить анимацию',
+    en: paused ? 'Resume animation' : 'Pause animation',
+    zh: paused ? '恢复动画' : '暂停动画',
   }[locale];
   return (
     <>
-      <section className="hero" id="top" ref={scene} data-motion="running">
+      <section className="hero" id="top" ref={scene} data-motion="paused">
         <div className="hero-parallax" aria-hidden="true">
           <img
             className="hero-art"
@@ -152,55 +200,52 @@ function Hero({ t, locale }: { t: SiteContent; locale: Locale }) {
             srcSet={`${asset('brand/hero-starfield.webp')} 1672w, ${asset('brand/hero-starfield-4k.webp')} 3840w`}
             sizes="100vw"
             alt=""
+            width={1672}
+            height={941}
             fetchPriority="high"
           />
         </div>
         <div className="hero-motion" aria-hidden="true">
           <div className="hero-motion__stars" />
           <div className="hero-motion__dust" />
-          <div className="hero-motion__star-signal" />
           <div className="hero-motion__veil" />
-          <div className="hero-console hero-console--left">
-            <div className="hero-console__header"><span>ORBITAL CONSOLE</span><b>LIVE</b></div>
-            <div className="hero-console__radar">
-              <span className="console-radar__ring console-radar__ring--one" />
-              <span className="console-radar__ring console-radar__ring--two" />
-              <span className="console-radar__sweep" />
-              <i className="console-radar__dot console-radar__dot--one" />
-              <i className="console-radar__dot console-radar__dot--two" />
-            </div>
-            <div className="hero-console__readout"><span>SECTOR 07</span><span>RANGE 18.4 AU</span></div>
-          </div>
-          <div className="hero-console hero-console--right">
-            <div className="hero-console__header"><span>VOID LINK</span><b>SYNC</b></div>
-            <div className="hero-console__bars"><i /><i /><i /><i /><i /><i /><i /><i /></div>
-            <div className="hero-console__readout"><span>VECTOR 03—19—07</span><span>NO SIGNAL / NOISE FLOOR</span></div>
-          </div>
+          <div className="bridge-reticle bridge-reticle--left"><span>− 07</span><i /><span>+ 19</span></div>
+          <div className="bridge-reticle bridge-reticle--right"><span>03 +</span><i /><span>07 −</span></div>
         </div>
-        <button className="motion-toggle" type="button" onClick={() => setPaused(value => !value)} aria-label={motionLabel} title={motionLabel} aria-pressed={paused}>
-          {paused ? <Play size={18} aria-hidden /> : <Pause size={18} aria-hidden />}
-        </button>
         <div className="hero-inner">
+          <div className="bridge-topline"><span className="bridge-station"><i aria-hidden="true" />{bridge.station}</span><span>VD — 001</span></div>
+          <div className="bridge-glass" aria-hidden="true"><i /><i /><i /><i /></div>
           <p className="eyebrow">{t.hero.eyebrow}</p>
           <div className="hero-title-wrap">
             <h1 className="hero-title" aria-label="VOID DOMINION">
-              <span className="hero-title__glow" aria-hidden="true">VOID DOMINION</span>
               <span className="hero-title__letters" aria-hidden="true">
-                {'VOID DOMINION'.split('').map((letter, index) => (
-                  <span className="hero-letter" style={{ '--letter-index': index } as CSSProperties} key={`${letter}-${index}`}>
-                    {letter === ' ' ? '\u00a0' : letter}
+                {['VOID', 'DOMINION'].map((word, wordIndex) => (
+                  <span className="hero-word" key={word}>
+                    {word.split('').map((letter, index) => (
+                      <span className="hero-letter" data-letter={letter} style={{ '--letter-index': index + wordIndex * 4 } as CSSProperties} key={`${letter}-${index}`}>{letter}</span>
+                    ))}
                   </span>
                 ))}
               </span>
             </h1>
           </div>
-          <p className="hero-tagline">{copy.tagline}</p>
+          <p className="hero-tagline">{copy.tagline.map(line => <span key={line}>{line}</span>)}</p>
           <div className="hero-actions">
-            <a className="btn btn-primary" href={GAME.apkUrl}>{copy.download}<ArrowDown size={22} aria-hidden /></a>
+            <a className="btn btn-primary" href={GAME.apkUrl}>{copy.download}<ArrowDown size={20} aria-hidden /></a>
             <a className="btn btn-ghost" href={GAME.browserUrl} target="_blank" rel="noopener noreferrer">{t.hero.browser}<Globe size={22} aria-hidden /></a>
           </div>
           <p className="hero-note">{copy.note}</p>
+          <div className="bridge-bottomline"><span className="bridge-alpha">{bridge.alpha}</span><span className="bridge-mark" aria-hidden="true">///</span><span aria-hidden="true">MMO / RTS</span></div>
         </div>
+        <BridgeInstruments />
+        <div className="bridge-projector" aria-hidden="true"><span className="projection-beam" /><span className="projection-ring" /><span className="projection-core" /></div>
+        <div className="bridge-lower">
+          <a className="briefing-link" href="#features"><span>{bridge.briefing}</span><ArrowDown size={18} aria-hidden /></a>
+          <span className="bridge-caption" aria-hidden="true">VOID DOMINION / COMMAND INTERFACE</span>
+        </div>
+        <button className="motion-toggle" type="button" onClick={() => setPaused(value => !value)} aria-label={motionLabel} title={motionLabel} aria-pressed={paused}>
+          {paused ? <Play size={15} aria-hidden /> : <Pause size={15} aria-hidden />}<span>{bridge.motion}</span>
+        </button>
       </section>
       <div className="story-strip"><p>{copy.story}</p><span>{copy.detail}</span></div>
     </>
